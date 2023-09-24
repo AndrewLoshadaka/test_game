@@ -100,6 +100,18 @@ public class Game extends JFrame{
         inputPanel.add(startButton);
 
         add(inputPanel);
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int screenWidth = screenSize.width;
+        int screenHeight = screenSize.height;
+
+        int windowWidth = getWidth();
+        int windowHeight = getHeight();
+
+        int x = (screenWidth - windowWidth) / 2;
+        int y = (screenHeight - windowHeight) / 2;
+
+        setLocation(x, y);
     }
 
     public JButton getjButton(JPanel inputPanel) {

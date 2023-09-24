@@ -26,7 +26,8 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     private final Player player;
     private final Monster monster;
 
-    private boolean isGameOver = false;
+    private boolean isAttackInProgress = false;
+
 
 
 
@@ -45,12 +46,6 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
         super.paintComponent(g);
         drawPlayers(g);
         drawBullets(g);
-
-        if (isGameOver) {
-            g.setColor(Color.WHITE);
-            g.setFont(new Font("Arial", Font.BOLD, 24));
-            g.drawString("Игра окончена!", 100, 150);
-        }
     }
 
     private void drawPlayers(Graphics g) {
@@ -109,7 +104,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
-        if (key == KeyEvent.VK_SPACE) {
+        if (key == KeyEvent.VK_SPACE && !isAttackInProgress) {
             playerBulletX = playerX + 50;
             playerBulletY = playerY + 20;
             monsterBulletX = monsterX - 10;
@@ -117,6 +112,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             playerBulletVisible = true;
             monsterBulletVisible = true;
             countRound++;
+            isAttackInProgress = true;
         }
     }
 
@@ -129,6 +125,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             player.attack(monster);
             playerBulletX = -10;
             playerBulletVisible = false;
+            isAttackInProgress = false;
         }
 
         if (monsterBulletVisible && monsterBulletX < playerX + 50 &&
@@ -143,6 +140,7 @@ public class GamePanel extends JPanel implements ActionListener, KeyListener {
             }
             monsterBulletX = -10;
             monsterBulletVisible = false;
+            isAttackInProgress = false;
         }
     }
 
